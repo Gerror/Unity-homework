@@ -16,7 +16,7 @@ namespace Game.Mechanics
         private Camera _mainCamera;
         private int _spawnObjectCount;
         
-        public event Action<float> BurstSpawnObject;
+        public event Action<float> BurstSpawnObjectEvent;
 
         private void OnValidate()
         {
@@ -53,14 +53,14 @@ namespace Game.Mechanics
             
             GameObject go = Object.Instantiate(_spawnObjectPrefab, worldPosition, Quaternion.identity);
             go.transform.SetParent(gameObject.transform);
-            go.GetComponent<SpawnObjectMechanics>().BurstSpawnObject += SpawnObjectMechanics_BurstSpawnObject;
+            go.GetComponent<SpawnObjectMechanics>().BurstSpawnObject += BurstSpawnObject;
         }
 
-        private void SpawnObjectMechanics_BurstSpawnObject(float result)
+        private void BurstSpawnObject(float result)
         {
             _spawnObjectCount--;
             SpawnObjects(Random.Range(1, _maxSpawnObject - _spawnObjectCount + 1));
-            BurstSpawnObject?.Invoke(result);
+            BurstSpawnObjectEvent?.Invoke(result);
         }
     }
 }

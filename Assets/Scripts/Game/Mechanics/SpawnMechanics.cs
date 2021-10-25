@@ -11,7 +11,7 @@ namespace Game.Mechanics
     {
         [SerializeField] private GameObject _spawnObjectPrefab;
         [SerializeField] private float _borderMultiplier = 0.8f;
-        [SerializeField] private int _maxSpawnObject = 10;
+        [Min(1)] [SerializeField] private int _maxSpawnObject = 10;
 
         private Camera _mainCamera;
         private int _spawnObjectCount;
@@ -22,9 +22,6 @@ namespace Game.Mechanics
         {
             if (_borderMultiplier < 0.5f)
                 _borderMultiplier = 0.5f;
-
-            if (_maxSpawnObject < 1)
-                _maxSpawnObject = 1;
         }
 
         void Start()
@@ -53,7 +50,7 @@ namespace Game.Mechanics
             
             GameObject go = Object.Instantiate(_spawnObjectPrefab, worldPosition, Quaternion.identity);
             go.transform.SetParent(gameObject.transform);
-            go.GetComponent<SpawnObjectMechanics>().BurstSpawnObject += BurstSpawnObject;
+            go.GetComponent<SpawnObjectMechanics>().BurstSpawnObjectEvent += BurstSpawnObject;
         }
 
         private void BurstSpawnObject(float result)

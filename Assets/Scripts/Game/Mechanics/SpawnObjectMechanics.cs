@@ -16,7 +16,7 @@ namespace Game.Mechanics
         private float _spawnTime;
         private float _currentDeltaTime;
 
-        public event Action<float> BurstSpawnObject;
+        public event Action<float> BurstSpawnObjectEvent;
 
         private void OnValidate()
         {
@@ -39,7 +39,7 @@ namespace Game.Mechanics
             
             if (_currentDeltaTime >= _maxLifeTime)
             {
-                BurstSpawnObject?.Invoke(fine);
+                BurstSpawnObjectEvent?.Invoke(fine);
                 Destroy(gameObject);
             }
         }
@@ -47,7 +47,7 @@ namespace Game.Mechanics
         public void OnClick()
         {
             var reward = maxReward * (1f - (_currentDeltaTime / _maxLifeTime));
-            BurstSpawnObject?.Invoke(reward);
+            BurstSpawnObjectEvent?.Invoke(reward);
             Destroy(gameObject);
         }
     }

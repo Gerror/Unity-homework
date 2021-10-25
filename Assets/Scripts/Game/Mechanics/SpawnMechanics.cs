@@ -10,22 +10,13 @@ namespace Game.Mechanics
     public class SpawnMechanics : MonoBehaviour
     {
         [SerializeField] private GameObject _spawnObjectPrefab;
-        [SerializeField] private float _borderMultiplier = 0.8f;
-        [SerializeField] private int _maxSpawnObject = 10;
+        [Min(0.5f)] [SerializeField] private float _borderMultiplier = 0.8f;
+        [Min(1)] [SerializeField] private int _maxSpawnObject = 10;
 
         private Camera _mainCamera;
         private int _spawnObjectCount;
         
-        public event Action<float> BurstSpawnObject;
-
-        private void OnValidate()
-        {
-            if (_borderMultiplier < 0.5f)
-                _borderMultiplier = 0.5f;
-
-            if (_maxSpawnObject < 1)
-                _maxSpawnObject = 1;
-        }
+        public event Action<float> BurstSpawnObjectEvent;
 
         void Start()
         {
@@ -53,14 +44,14 @@ namespace Game.Mechanics
             
             GameObject go = Object.Instantiate(_spawnObjectPrefab, worldPosition, Quaternion.identity);
             go.transform.SetParent(gameObject.transform);
-            go.GetComponent<SpawnObjectMechanics>().BurstSpawnObject += SpawnObjectMechanics_BurstSpawnObject;
+            go.GetComponent<SpawnObjectMechanics>().BurstSpawnObjectEvent += BurstSpawnObject;
         }
 
-        private void SpawnObjectMechanics_BurstSpawnObject(float result)
+        private void BurstSpawnObject(float result)
         {
             _spawnObjectCount--;
             SpawnObjects(Random.Range(1, _maxSpawnObject - _spawnObjectCount + 1));
-            BurstSpawnObject?.Invoke(result);
+            BurstSpawnObjectEvent?.Invoke(result);
         }
     }
 }

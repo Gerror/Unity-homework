@@ -17,12 +17,12 @@ namespace Game.UI
         {
             _currentScore = 0;
             _spawnMechanics = FindObjectOfType<SpawnMechanics>();
-            _spawnMechanics.BurstSpawnObject += SpawnMechanics_BurstSpawnObject;
+            _spawnMechanics.BurstSpawnObjectEvent += BurstSpawnObject;
             
             SetText();
         }
 
-        private void SpawnMechanics_BurstSpawnObject(float result)
+        private void BurstSpawnObject(float result)
         {
             _currentScore += result;
             SetText();           

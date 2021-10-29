@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Game.Mechanics
 {
@@ -12,6 +13,8 @@ namespace Game.Mechanics
         [Min(1)] [SerializeField] private float _maxLifeTime = 5.0f;
         [SerializeField] private float fine = -1f;
         [Min(1)] [SerializeField] private float maxReward = 1f;
+
+        [SerializeField] private GameObject _explosionPrefab;
         
         private float _spawnTime;
         private float _currentDeltaTime;
@@ -40,7 +43,7 @@ namespace Game.Mechanics
             if (_currentDeltaTime >= _maxLifeTime)
             {
                 BurstSpawnObjectEvent?.Invoke(fine);
-                Destroy(gameObject);
+                Burst();
             }
         }
 
@@ -48,6 +51,14 @@ namespace Game.Mechanics
         {
             var reward = maxReward * (1f - (_currentDeltaTime / _maxLifeTime));
             BurstSpawnObjectEvent?.Invoke(reward);
+            Burst();
+        }
+
+        private void Burst()
+        {
+            GameObject explosion = Object.Instantiate(_explosionPrefab, transform.position, _explosionPrefab.transform.rotation);
+            explosion.transform.SetParent(gameObject.transform.parent);
+            explosion.transform.localScale = gameObject.transform.localScale;
             Destroy(gameObject);
         }
     }

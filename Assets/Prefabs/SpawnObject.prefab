@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: d981966faa16e744d9ca088fe8b5107f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -116,3 +116,4 @@ MonoBehaviour:
   _maxLifeTime: 5
   fine: -1
   maxReward: 1
+  _explosionPrefab: {fileID: 4418697433519406856, guid: c118222e379ef0e44a4d8bcd5e0f473d, type: 3}

@@ -88,6 +88,9 @@ namespace Game.Mechanics
             _gameScreen.gameObject.SetActive(true);
             _spawnMechanics.gameObject.SetActive(true);
             _endGameWindow.gameObject.SetActive(false);
+            
+            _spawnMechanics.Respawn();
+            
             Time.timeScale = 1;
         }
 

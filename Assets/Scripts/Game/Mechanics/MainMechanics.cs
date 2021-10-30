@@ -20,10 +20,9 @@ namespace Game.Mechanics
 
         [SerializeField] private AboutMeWindow _aboutMeWindow;
 
-        [SerializeField] private string _playerName = "";
-        
-        [SerializeField] private int _maxTime = 60;
-        
+        [Min(15)] [SerializeField] private int _maxTime = 60;
+
+        private string _playerName = "";
         private int _currentTime = 0;
         private float _currentScore = 0f;
 

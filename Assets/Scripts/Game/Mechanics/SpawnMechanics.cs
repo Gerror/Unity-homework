@@ -10,7 +10,7 @@ namespace Game.Mechanics
     public class SpawnMechanics : MonoBehaviour
     {
         [SerializeField] private GameObject _spawnObjectPrefab;
-        [Min(1)] [SerializeField] private float _spawnInterval = 1f;
+        [Min(5f)] [SerializeField] private float _spawnInterval = 10f;
         [SerializeField] private List<Transform> _spawnerTransforms;
 
         private Camera _mainCamera;

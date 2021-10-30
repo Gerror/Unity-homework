@@ -10,40 +10,43 @@ namespace Game.Mechanics
     public class SpawnMechanics : MonoBehaviour
     {
         [SerializeField] private GameObject _spawnObjectPrefab;
-        [SerializeField] private float _borderMultiplier = 0.8f;
-        [Min(1)] [SerializeField] private int _maxSpawnObject = 10;
+        [Min(1)] [SerializeField] private float _spawnInterval = 1f;
+        [SerializeField] private List<Transform> _spawnerTransforms;
 
         private Camera _mainCamera;
-        private int _spawnObjectCount;
         
         public event Action<float> BurstSpawnObjectEvent;
 
         private void OnValidate()
         {
-            if (_borderMultiplier < 0.5f)
-                _borderMultiplier = 0.5f;
+            if (_spawnerTransforms.Count != transform.childCount)
+            {
+                _spawnerTransforms = new List<Transform>();
+                foreach (Transform spawner in transform)
+                {
+                    _spawnerTransforms.Add(spawner);
+                }
+            }
         }
 
         public void Respawn()
         {
-            int i = 0;
+            List<GameObject> allSpawnObjects = new List<GameObject>();
 
-            GameObject[] allChildren = new GameObject[transform.childCount];
-
-            foreach (Transform child in transform)
+            foreach (Transform spawner in _spawnerTransforms)
             {
-                allChildren[i] = child.gameObject;
-                i += 1;
+                foreach (Transform spawnObject in spawner)
+                {
+                    allSpawnObjects.Add(spawnObject.gameObject);
+                }
             }
 
-            foreach (GameObject child in allChildren)
+            foreach (GameObject spawnObject in allSpawnObjects)
             {
-                DestroyImmediate(child.gameObject);
+                DestroyImmediate(spawnObject.gameObject);
             }
-            
-            
-            _spawnObjectCount = 0;
-            SpawnObjects(Random.Range(1, _maxSpawnObject + 1));
+
+            SpawnObjects();
         }
 
         void Start()
@@ -51,32 +54,37 @@ namespace Game.Mechanics
             _mainCamera = Camera.main;
         }
 
-        private void SpawnObjects(int count)
+        private void SpawnObjects()
         {
-            for (int i = 0; i < count; i++) {
-                SpawnObject();    
+            foreach (Transform spawner in _spawnerTransforms)
+            {
+                StartCoroutine(IntervalSpawnObject(spawner));
             }
-
-            _spawnObjectCount += count;
         }
 
-        private void SpawnObject()
+        private IEnumerator IntervalSpawnObject(Transform spawner)
         {
-            float x = Random.Range(Screen.width * (1.0f - _borderMultiplier), Screen.width * _borderMultiplier);
-            float y = Random.Range(Screen.height * (1.0f - _borderMultiplier), Screen.height * _borderMultiplier);
-            Vector3 screenPosition = new Vector3(x, y, 0f);
-            Vector3 worldPosition = _mainCamera.ScreenToWorldPoint(screenPosition);
-            worldPosition.z = 0f;
-            
-            GameObject go = Object.Instantiate(_spawnObjectPrefab, worldPosition, Quaternion.identity);
-            go.transform.SetParent(gameObject.transform);
+            SpawnObject(spawner);
+            while (true)
+            {
+                yield return new WaitForSeconds(_spawnInterval);
+                SpawnObject(spawner);
+            }
+        }
+        
+        private void SpawnObject(Transform spawner)
+        {
+            GameObject go = Object.Instantiate(_spawnObjectPrefab, spawner.position, Quaternion.identity);
+            go.transform.SetParent(spawner);
             go.GetComponent<SpawnObjectMechanics>().BurstSpawnObjectEvent += BurstSpawnObject;
+
+            Rigidbody2D goRigidbody = go.GetComponent<Rigidbody2D>();
+            goRigidbody.velocity = Vector3.zero - spawner.position;
         }
 
         private void BurstSpawnObject(float result)
         {
-            _spawnObjectCount--;
-            SpawnObjects(Random.Range(1, _maxSpawnObject - _spawnObjectCount + 1));
+            SpawnObject(_spawnerTransforms[Random.Range(0, _spawnerTransforms.Count)]);
             BurstSpawnObjectEvent?.Invoke(result);
         }
     }

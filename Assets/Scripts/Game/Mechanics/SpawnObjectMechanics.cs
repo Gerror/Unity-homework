@@ -11,7 +11,6 @@ namespace Game.Mechanics
     {
         [Min(1)] [SerializeField] private int _maxSize = 2;
         [Min(1)] [SerializeField] private float _maxLifeTime = 5.0f;
-        [SerializeField] private float fine = -1f;
         [Min(1)] [SerializeField] private float maxReward = 1f;
 
         [SerializeField] private GameObject _explosionPrefab;
@@ -20,12 +19,6 @@ namespace Game.Mechanics
         private float _currentDeltaTime;
 
         public event Action<float> BurstSpawnObjectEvent;
-
-        private void OnValidate()
-        {
-            if (fine > -1f)
-                fine = -1f;
-        }
 
         void Start()
         {
@@ -42,7 +35,7 @@ namespace Game.Mechanics
             
             if (_currentDeltaTime >= _maxLifeTime)
             {
-                BurstSpawnObjectEvent?.Invoke(fine);
+                BurstSpawnObjectEvent?.Invoke(0f);
                 Burst();
             }
         }

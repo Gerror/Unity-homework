@@ -84,6 +84,7 @@ namespace Game.Mechanics
 
         private void StartGame()
         {
+            StopAllCoroutines();
             _startWindow.gameObject.SetActive(false);
             _gameScreen.gameObject.SetActive(true);
             _spawnMechanics.gameObject.SetActive(true);

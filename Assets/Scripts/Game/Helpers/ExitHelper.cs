@@ -3,7 +3,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
     
-namespace Game.Mechanics
+namespace Game.Helpers
 {
     public static class ExitHelper
     {

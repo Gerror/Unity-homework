@@ -9,8 +9,6 @@ namespace Game.UI
     {
         [SerializeField] private Text _scoreLabel;
         [SerializeField] private Text _timeLabel;
-
-        public event Action TimeTickEvent;
         
         public void SetScore(float score)
         {
@@ -26,21 +24,6 @@ namespace Game.UI
             if ((time % 60) / 10 == 0)
                 seconds = "0" + seconds;
             _timeLabel.text = "Время: " + minutes + ":" + seconds;
-        }
-
-        private void OnEnable()
-        {
-            StartCoroutine(Timer());
-            SetScore(0f);
-        }
-
-        private IEnumerator Timer()
-        {
-            while (true)
-            {
-                TimeTickEvent?.Invoke();
-                yield return new WaitForSeconds(1f);
-            }
         }
     }
 }

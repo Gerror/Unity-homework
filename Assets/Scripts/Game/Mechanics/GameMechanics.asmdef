@@ -2,6 +2,7 @@
     "name": "GameMechanics",
     "rootNamespace": "",
     "references": [
+        "GUID:3963ea5fec6e5a94bab83a0914be1524",
         "GUID:cf14a43f378b50c4d8a71e490b9b4433"
     ],
     "includePlatforms": [],

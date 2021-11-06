@@ -12,8 +12,6 @@ namespace Game.Mechanics
         [SerializeField] private GameObject _spawnObjectPrefab;
         [Min(5f)] [SerializeField] private float _spawnInterval = 10f;
         [SerializeField] private List<Transform> _spawnerTransforms;
-
-        private Camera _mainCamera;
         
         public event Action<float> BurstSpawnObjectEvent;
 
@@ -47,11 +45,6 @@ namespace Game.Mechanics
             }
 
             SpawnObjects();
-        }
-
-        void Start()
-        {
-            _mainCamera = Camera.main;
         }
 
         private void SpawnObjects()

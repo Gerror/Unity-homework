@@ -10,11 +10,13 @@ namespace Game.UI
         public event Action ReplayEvent;
         public event Action BackToMenuEvent;
 
-        public void SetScore(float score, string playerName)
+        public void SetScore(float score, string playerName, int time)
         {
-            _scoreLabel.text = "Ваш счет: " + Math.Round(score, 1);
+            _scoreLabel.text = time + " сек. Ваш счет " + Math.Round(score, 1) + " очков!";
             if (playerName != "")
-                _scoreLabel.text = playerName + ", " + _scoreLabel.text;
+                _scoreLabel.text = playerName + ", за " + _scoreLabel.text;
+            else
+                _scoreLabel.text = "За " + _scoreLabel.text;
         }
         
         public void OnReplay()

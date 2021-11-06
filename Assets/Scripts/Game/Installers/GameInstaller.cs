@@ -9,6 +9,7 @@ namespace Game.Installers
         public ScoreManager ScoreManager;
         public SoundManager SoundManager;
         public TimeManager TimeManager;
+        public GameSettings GameSettings;
 
         public override void InstallBindings()
         {
@@ -17,6 +18,7 @@ namespace Game.Installers
             Container.Bind<SoundManager>().FromInstance(SoundManager).AsSingle();
             Container.Bind<ScoreManager>().FromInstance(ScoreManager).AsSingle();
             Container.Bind<TimeManager>().FromInstance(TimeManager).AsSingle();
+            Container.Bind<GameSettings>().FromInstance(GameSettings).AsSingle();
         }
     }
 }

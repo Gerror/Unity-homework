@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Game.Core.Sounds;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using Zenject;
+using Game.Core;
 
 namespace Game.Mechanics
 {
@@ -14,11 +14,24 @@ namespace Game.Mechanics
         [Min(1)] [SerializeField] private float maxReward = 1f;
 
         [SerializeField] private GameObject _explosionPrefab;
+        [SerializeField] private AudioClip _burstClip;
+        
+        private SoundManager _soundManager;
+        private ScoreManager _scoreManager;
+        private PrefabFactory _prefabFactory;
         
         private float _spawnTime;
         private float _currentDeltaTime;
 
-        public event Action<float> BurstSpawnObjectEvent;
+        public event Action BurstSpawnObjectEvent;
+        
+        [Inject]
+        private void Construct(SoundManager soundManager, ScoreManager scoreManager, PrefabFactory prefabFactory)
+        {
+            _soundManager = soundManager;
+            _scoreManager = scoreManager;
+            _prefabFactory = prefabFactory;
+        }
 
         void Start()
         {
@@ -35,7 +48,6 @@ namespace Game.Mechanics
             
             if (_currentDeltaTime >= _maxLifeTime)
             {
-                BurstSpawnObjectEvent?.Invoke(0f);
                 Burst();
             }
         }
@@ -43,15 +55,20 @@ namespace Game.Mechanics
         public void OnClick()
         {
             var reward = maxReward * (1f - (_currentDeltaTime / _maxLifeTime));
-            BurstSpawnObjectEvent?.Invoke(reward);
+            _scoreManager.AddScore(reward);
             Burst();
         }
 
         private void Burst()
         {
-            GameObject explosion = Object.Instantiate(_explosionPrefab, transform.position, _explosionPrefab.transform.rotation);
-            explosion.transform.SetParent(gameObject.transform.parent);
+            GameObject explosion = _prefabFactory.Spawn(
+                _explosionPrefab,
+                transform.position,
+                _explosionPrefab.transform.rotation,
+                gameObject.transform.parent);
             explosion.transform.localScale = gameObject.transform.localScale;
+            _soundManager.CreateSoundObject().Play(_burstClip, transform.position, false, 0.25f);
+            BurstSpawnObjectEvent?.Invoke();
             Destroy(gameObject);
         }
     }

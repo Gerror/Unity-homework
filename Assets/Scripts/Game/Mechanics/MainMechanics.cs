@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.UI;
-using Game.Managers;
+using Game.Core;
+using Game.Core.Sounds;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Mechanics
 {
@@ -10,35 +10,38 @@ namespace Game.Mechanics
     {
         [SerializeField] private MainUiController _mainUiController;
         [SerializeField] private SpawnMechanics _spawnMechanics;
-        [SerializeField] private ScoreManager _scoreManager;
-        [SerializeField] private TimeManager _timeManager;
+
+        [SerializeField] private AudioClip _backgroundAudio;
+        
+        private ScoreManager _scoreManager;
+        private SoundManager _soundManager;
+        private TimeManager _timeManager;
+
+        [Inject]
+        private void Construct(ScoreManager scoreManager, SoundManager soundManager, TimeManager timeManager)
+        {
+            _scoreManager = scoreManager;
+            _soundManager = soundManager;
+            _timeManager = timeManager;
+        }
         
         void OnValidate()
         {
             if (!_spawnMechanics)
                 _spawnMechanics = FindObjectOfType<SpawnMechanics>();
-            if (!_scoreManager)
-                _scoreManager = FindObjectOfType<ScoreManager>();
-            if (!_timeManager)
-                _timeManager = FindObjectOfType<TimeManager>();
             if (!_mainUiController)
                 _mainUiController = FindObjectOfType<MainUiController>();
         }
 
         void Start()
         {
-            _spawnMechanics.BurstSpawnObjectEvent += BurstSpawnObject;
-
             _timeManager.EndTimeEvent += EndGame;
 
             _mainUiController.BackToMainMenuEvent += DeactivateSpawnMechanics;
             _mainUiController.EndGameEvent += EndGame;
             _mainUiController.StartGameEvent += StartGame;
-        }
-        
-        private void BurstSpawnObject(float result)
-        {
-            _scoreManager.AddScore(result);
+            
+            _soundManager.CreateSoundObject().Play(_backgroundAudio, transform.position, true, 0.1f);    
         }
 
         private void DeactivateSpawnMechanics()

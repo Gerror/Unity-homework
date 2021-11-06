@@ -115,9 +115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxSize: 2
   _maxLifeTime: 5
-  fine: -1
   maxReward: 1
   _explosionPrefab: {fileID: 4418697433519406856, guid: c118222e379ef0e44a4d8bcd5e0f473d, type: 3}
+  _burstClip: {fileID: 8300000, guid: 8fdd83905a173014494546281fdd287e, type: 3}
 --- !u!50 &1324269158420377662
 Rigidbody2D:
   serializedVersion: 4

@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
+using Zenject;
+using Game.Core;
 
 namespace Game.Mechanics
 {
@@ -14,8 +14,13 @@ namespace Game.Mechanics
         [SerializeField] private List<Transform> _spawnerTransforms;
 
         private Camera _mainCamera;
-        
-        public event Action<float> BurstSpawnObjectEvent;
+        private PrefabFactory _prefabFactory;
+
+        [Inject]
+        private void Construct(PrefabFactory prefabFactory)
+        {
+            _prefabFactory = prefabFactory;
+        }
 
         private void OnValidate()
         {
@@ -74,18 +79,16 @@ namespace Game.Mechanics
         
         private void SpawnObject(Transform spawner)
         {
-            GameObject go = Object.Instantiate(_spawnObjectPrefab, spawner.position, Quaternion.identity);
-            go.transform.SetParent(spawner);
+            GameObject go = _prefabFactory.Spawn(_spawnObjectPrefab, spawner.position, Quaternion.identity, spawner);
             go.GetComponent<SpawnObjectMechanics>().BurstSpawnObjectEvent += BurstSpawnObject;
 
             Rigidbody2D goRigidbody = go.GetComponent<Rigidbody2D>();
             goRigidbody.velocity = Vector3.zero - spawner.position;
         }
 
-        private void BurstSpawnObject(float result)
+        private void BurstSpawnObject()
         {
             SpawnObject(_spawnerTransforms[Random.Range(0, _spawnerTransforms.Count)]);
-            BurstSpawnObjectEvent?.Invoke(result);
         }
     }
 }

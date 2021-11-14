@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5ecbc4dac0b84593badfe3d6b81c639, type: 3}
+  m_Script: {fileID: 0}
   m_Name: GameProxy
   m_EditorClassIdentifier: 

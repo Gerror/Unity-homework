@@ -73,23 +73,28 @@ public class ZombieBotInput : PlayerInput
     {
         Vector3 direction = new Vector3();
         Vector3 targetPosition = new Vector3();
-        bool needAttack = false;
         
         if (Target != null)
         {
             targetPosition = Target.transform.position;
-            needAttack = (Target.transform.position - transform.position).magnitude <= _attackDistance;
+            
+            if ((Target.transform.position - transform.position).magnitude <= _attackDistance)
+                return (Vector3.zero, transform.rotation, true);
         }
         else
         {
             if (_deltaPath == null || _deltaPath.Length < 2)
-                return (Vector3.zero, Quaternion.identity, false);
-            
-            targetPosition = _initPosition + _deltaPath[_currentPoint];
-            
-            if ((targetPosition - transform.position).magnitude <= _stepLength)
             {
-                _currentPoint = (_currentPoint + 1) % _deltaPath.Length;
+                targetPosition = _initPosition;
+            }
+            else
+            {
+                targetPosition = _initPosition + _deltaPath[_currentPoint];
+            
+                if ((targetPosition - transform.position).magnitude <= _stepLength)
+                {
+                    _currentPoint = (_currentPoint + 1) % _deltaPath.Length;
+                }   
             }
         }
         
@@ -102,8 +107,8 @@ public class ZombieBotInput : PlayerInput
                 direction = corner - transform.position;
                 if (direction.magnitude <= _stepLength)
                     continue;
-
-                return (direction, Quaternion.LookRotation(direction), needAttack);
+                direction.y = 0;
+                return (direction, Quaternion.LookRotation(direction), false);
             }
         }
         

@@ -147,7 +147,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7681659814906748126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +164,6 @@ MonoBehaviour:
   _gameSettings: {fileID: 0}
   _aliveView: {fileID: 1131526549626236}
   _diedView: {fileID: 7750346275728890811}
-  _rigidbody: {fileID: 54461488628131348}
   _zombieBotInput: {fileID: -4068238817993719748}
 --- !u!114 &-4068238817993719748
 MonoBehaviour:
@@ -191,7 +190,7 @@ MonoBehaviour:
   _viewRadius: 7
   _screamRadius: 20
   _attackDistance: 2
-  _stepLength: 0.2
+  _stepLength: 0.5
   Target: {fileID: 0}
 --- !u!1 &7750346275728890811
 GameObject:

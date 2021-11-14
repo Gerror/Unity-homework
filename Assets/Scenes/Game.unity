@@ -11302,7 +11302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d503ff65349a648990c5d9a7e5197d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _difficalty: 0
+  _difficalty: 1
   _timeToThinkAI:
   - 0.5
   - 0.25

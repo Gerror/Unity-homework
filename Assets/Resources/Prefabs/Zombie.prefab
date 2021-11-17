@@ -182,13 +182,12 @@ MonoBehaviour:
   _zombieComponent: {fileID: 7681659814906748126}
   _firemanLayerMask:
     serializedVersion: 2
-    m_Bits: 32768
-  _zombieLayerMask:
+    m_Bits: 16384
+  _wallLayerMask:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 131072
   _deltaPath: []
-  _viewRadius: 7
-  _screamRadius: 20
+  _viewRadius: 10
   _attackDistance: 2
   _stepLength: 0.5
   Target: {fileID: 0}
@@ -315,8 +314,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8021088189660525962}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0.5}
-  m_LocalScale: {x: 0.3, y: 0.1, z: 0.3}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0.4}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 4765267308680172}
   m_RootOrder: 0

@@ -1,53 +1,57 @@
 using System;
 using UnityEngine;
 
-public class GameSettings : MonoBehaviour
+namespace Game
 {
-    private enum Difficalty
+    public enum Difficalty
     {
         Easy,
         Average,
         Hard
     }
 
-    [SerializeField] private Difficalty _difficalty;
-
-    [SerializeField] private float[] _timeToThinkAI;
-    [SerializeField] private float[] _zombieSpeed;
-    [SerializeField] private float[] _zombieDamage;
-    [SerializeField] private float[] _zombieAttackTime;
-
-    private void OnValidate()
+    public class GameSettings : MonoBehaviour
     {
-        ValidateFloatArray(ref _timeToThinkAI);
-        ValidateFloatArray(ref _zombieSpeed);
-        ValidateFloatArray(ref _zombieDamage);
-        ValidateFloatArray(ref _zombieAttackTime);
-    }
 
-    private void ValidateFloatArray(ref float[] floatArray)
-    {
-        if (floatArray.Length != Enum.GetNames(typeof(Difficalty)).Length)
-            floatArray = new float[Enum.GetNames(typeof(Difficalty)).Length];
-    }
+        public Difficalty Difficalty;
 
-    public float GetTimeToThinkAI()
-    {
-        return _timeToThinkAI[(int) _difficalty];
-    }
+        [SerializeField] private float[] _timeToThinkAI;
+        [SerializeField] private float[] _zombieSpeed;
+        [SerializeField] private float[] _zombieDamage;
+        [SerializeField] private float[] _zombieAttackTime;
 
-    public float GetZombieSpeed()
-    {
-        return _zombieSpeed[(int) _difficalty];
-    }
+        private void OnValidate()
+        {
+            ValidateFloatArray(ref _timeToThinkAI);
+            ValidateFloatArray(ref _zombieSpeed);
+            ValidateFloatArray(ref _zombieDamage);
+            ValidateFloatArray(ref _zombieAttackTime);
+        }
 
-    public float GetZombieDamage()
-    {
-        return _zombieDamage[(int) _difficalty];
-    }
+        private void ValidateFloatArray(ref float[] floatArray)
+        {
+            if (floatArray.Length != Enum.GetNames(typeof(Difficalty)).Length)
+                floatArray = new float[Enum.GetNames(typeof(Difficalty)).Length];
+        }
 
-    public float GetZombieAttackTime()
-    {
-        return _zombieAttackTime[(int) _difficalty];
+        public float GetTimeToThinkAI()
+        {
+            return _timeToThinkAI[(int) Difficalty];
+        }
+
+        public float GetZombieSpeed()
+        {
+            return _zombieSpeed[(int) Difficalty];
+        }
+
+        public float GetZombieDamage()
+        {
+            return _zombieDamage[(int) Difficalty];
+        }
+
+        public float GetZombieAttackTime()
+        {
+            return _zombieAttackTime[(int) Difficalty];
+        }
     }
 }

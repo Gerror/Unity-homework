@@ -52,7 +52,7 @@ namespace Game
         
         public void CreateLocalPlayer()
         {
-            var points = _gameplayView.SpawnPoints;
+            var points = _gameplayView.PlayerSpawnPoints;
             var spawnPoint = points[Random.Range(0, points.Length)];
             
             _playerController = _networkManager.CreatePlayer(_config.PlayerPrefab.Path, spawnPoint.position, spawnPoint.rotation);

@@ -23,6 +23,14 @@ MonoBehaviour:
     _resource: {fileID: 1708751659445192, guid: 4c0e2be2754244751b033ade9a7feda0,
       type: 3}
     _resourcePath: Prefabs/Bullet
+  AccelerationPrefab:
+    _resource: {fileID: 643500917827272856, guid: 9f8ca6eef6f62c64baffa14a07c7f354,
+      type: 3}
+    _resourcePath: Prefabs/Acceleration
+  DecelerationPrefab:
+    _resource: {fileID: 5259308478524086459, guid: 409280e18cdf7cb4d89898d716710a66,
+      type: 3}
+    _resourcePath: Prefabs/Deceleration
   CurrentPlayerLayer:
     _currentPlayerLayer:
       serializedVersion: 2

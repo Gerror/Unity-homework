@@ -12,11 +12,14 @@ namespace View
 
         [SerializeField] private List<Vector3> _points;
 
-        [SerializeField] private Transform[] _spawnPoints;
+        [SerializeField] private Transform[] _playerSpawnPoints;
+        [SerializeField] private Transform[] _accelerationSpawnPoints;
 
         public IReadOnlyList<Vector3> Points => _points;
 
-        public Transform[] SpawnPoints => _spawnPoints;
+        public Transform[] PlayerSpawnPoints => _playerSpawnPoints;
+        public Transform[] AccelerationSpawnPoints => _accelerationSpawnPoints;
+
 #if UNITY_EDITOR
         
         [UnityEditor.MenuItem("CONTEXT/LevelMap/Instantiate Points")]

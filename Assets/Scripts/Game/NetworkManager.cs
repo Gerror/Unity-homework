@@ -49,6 +49,14 @@ namespace Game
             
             return playerController;
         }
+
+        public AccelerationComponent CreateAccelerationEffect(string prefabName, Vector3 position, Quaternion rotation)
+        {
+            var acceleration = PhotonNetwork.Instantiate(prefabName, position, rotation);
+            var accelerationComponent = acceleration.GetComponent<AccelerationComponent>();
+
+            return accelerationComponent;
+        }
         
         public void SetFireman(int id)
         {

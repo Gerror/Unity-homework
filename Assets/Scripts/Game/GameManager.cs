@@ -12,13 +12,14 @@ namespace Game
 
         [Header("Managers")]
         [SerializeField] private NetworkManager _networkManager;
-        
+
         [Header("Configs")]
         [SerializeField] private GameConfig _config;
         [SerializeField] private NetworkEvents _networkEvents;
 
         private BulletManager _bulletManager;
         private PlayersManager _playersManager;
+        private AccelerationManager _accelerationManager;
 
         public void OnEnable()
         {
@@ -31,6 +32,7 @@ namespace Game
 
             _bulletManager = new BulletManager(_config);
             _playersManager = new PlayersManager(_networkManager, _bulletManager, _networkEvents, _config, _gameplayView);
+            _accelerationManager = new AccelerationManager(_networkManager, _config, _gameplayView);
 
             _view.SetLoadingState(true);
             _view.SetSettingsState(false);
@@ -42,6 +44,7 @@ namespace Game
         {
             _playersManager.SetRandomFireman();
             _networkManager.StartGame();
+            _accelerationManager.StartAccelerationManager();
         }
 
         private void Update()

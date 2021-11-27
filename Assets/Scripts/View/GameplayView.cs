@@ -11,7 +11,8 @@ namespace View
         [SerializeField] private Transform _viewPoint;
         [SerializeField] private LevelMap _levelMap;
         
-        public Transform[] SpawnPoints => _levelMap.SpawnPoints;
+        public Transform[] PlayerSpawnPoints => _levelMap.PlayerSpawnPoints;
+        public Transform[] AccelerationSpawnPoints => _levelMap.AccelerationSpawnPoints;
 
         public void FollowPlayer(Transform player)
         {

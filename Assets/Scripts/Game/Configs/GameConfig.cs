@@ -14,6 +14,8 @@ namespace Game.Configs
         [Header("Prefabs")]
         public ResourceLink PlayerPrefab;
         public ResourceLink BulletPrefab;
+        public ResourceLink AccelerationPrefab;
+        public ResourceLink DecelerationPrefab;
 
         [Header("Player View")]
         public LayerMaskAsInt CurrentPlayerLayer;
